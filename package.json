@@ -1,0 +1,11 @@
+{
+  "name": "us-visa-appointment-slot-tracker",
+  "version": "1.0.0",
+  "description": "This python script makes alerts you if it finds an appointment for a US visa slot earlier than your current appointment date",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "c2karansingh",
+  "license": "ISC"
+}
