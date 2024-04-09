@@ -18,6 +18,23 @@ const LOCATION_PATH_MAP = {
     'Vancouver': '95.json',
 };
 
+function beep(duration = 200, frequency = 440, volume = 1, type = 'sine') {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    let oscillator = audioContext.createOscillator();
+    let gainNode = audioContext.createGain();
+
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+
+    gainNode.gain.value = volume;
+    oscillator.frequency.value = frequency;
+    oscillator.type = type;
+
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + (duration * 0.001));
+};
+
+
 const getAvailableDates = async (location) => {
     const locationPath = LOCATION_PATH_MAP[location];
     if (!locationPath) {
@@ -32,7 +49,9 @@ const getAvailableDates = async (location) => {
         "method": "GET"
     });
     return response.json();
-}
+};
+
+
 (
     async () => {
         const allLocations = Object.keys(LOCATION_PATH_MAP);
@@ -45,16 +64,22 @@ const getAvailableDates = async (location) => {
                         console.log(availableDates);
                         for (const availableDate of availableDates) {
                             if (availableDate.date < YOUR_CURRENT_DATE) {
+                                beep(1000, 3000, 5);
                                 alert(`Location: ${location}, Date: ${availableDate.date}`);
                             }
                         }
                         await new Promise((resolve) => setTimeout(resolve, INTERVAL_BETWEEN_REQUESTS_IN_MILLISECONDS));
                     }
                     catch (error) {
+                        beep(1000, 100, 5);
+                        console.log(`Error occurred while checking location: ${location}`);
                         console.error(error);
+                        console.log('Stopping the interval');
                         clearInterval(intervalCode);
                     }
                 }
+                //logging local date time to console
+                console.log(new Date().toLocaleString());
             },
             INTERVAL_BEFORE_REPEATING_REQUESTS_IN_MILLISECONDS
         );
