@@ -73,7 +73,7 @@ const getAvailableDates = async (location) => {
                     catch (error) {
                         beep(1000, 100, 5);
                         console.log(`Error occurred while checking location: ${location}`);
-                        console.error(error);
+                        console.error(JSON.stringify(error));
                         console.log('Stopping the interval');
                         clearInterval(intervalCode);
                     }
