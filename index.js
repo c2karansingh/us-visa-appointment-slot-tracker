@@ -2,7 +2,7 @@ const HEADERS_FROM_BROWSER = {
     "accept": "application/json, text/javascript, */*; q=0.01",
 };
 
-const YOUR_CURRENT_DATE = "2026-03-24";
+const YOUR_CURRENT_DATE = "2026-01-30";
 const INTERVAL_BETWEEN_REQUESTS_IN_MILLISECONDS = 1000 * 1;
 const INTERVAL_BEFORE_REPEATING_REQUESTS_IN_MILLISECONDS = 1000 * 30;
 
@@ -73,7 +73,7 @@ const getAvailableDates = async (location) => {
                     catch (error) {
                         beep(1000, 100, 5);
                         console.log(`Error occurred while checking location: ${location}`);
-                        console.error(JSON.stringify(error));
+                        console.log(JSON.stringify(error));
                         console.log('Stopping the interval');
                         clearInterval(intervalCode);
                     }
