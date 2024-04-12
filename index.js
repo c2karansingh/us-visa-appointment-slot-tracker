@@ -48,6 +48,10 @@ const getAvailableDates = async (location) => {
         "body": null,
         "method": "GET"
     });
+
+    if (!response.ok && response.status >= 500 && response.status < 600) {
+        throw new Error(`Server error: ${response.status}`);
+    }
     return response.json();
 };
 
@@ -65,19 +69,28 @@ const getAvailableDates = async (location) => {
                         for (const availableDate of availableDates) {
                             if (availableDate.date < YOUR_CURRENT_DATE) {
                                 beep(1000, 3000, 5);
-                                console.log(`Location: ${location}, Date: ${availableDate.date}`);
+                                alert(`Location: ${location}, Date: ${availableDate.date}`);
+                                clearInterval(intervalCode);
                             }
                         }
                         await new Promise((resolve) => setTimeout(resolve, INTERVAL_BETWEEN_REQUESTS_IN_MILLISECONDS));
                     }
                     catch (error) {
-                        beep(1000, 100, 5);
                         console.log(`Error occurred while checking location: ${location}`);
                         console.log(JSON.stringify(error));
+                        console.log(error);
+                        console.log(error.message);
+                        if (error.message.startsWith("Server error") || error instanceof TypeError) {
+                            continue; // Continue execution to try again later
+                        }
                         console.log('Stopping the interval');
+                        beep(1000, 100, 5); // This will beep for any error.
                         clearInterval(intervalCode);
+                        return; // Exit the function on critical errors
                     }
                 }
+                // clear the current output in the browser console
+                console.clear();
                 //logging local date time to console
                 console.log(new Date().toLocaleString());
             },
