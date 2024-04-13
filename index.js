@@ -71,6 +71,7 @@ const getAvailableDates = async (location) => {
                                 beep(1000, 3000, 5);
                                 alert(`Location: ${location}, Date: ${availableDate.date}`);
                                 clearInterval(intervalCode);
+                                return;
                             }
                         }
                         await new Promise((resolve) => setTimeout(resolve, INTERVAL_BETWEEN_REQUESTS_IN_MILLISECONDS));
