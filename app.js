@@ -207,6 +207,6 @@ async function book(authenticatedSchedulingHeaders, location, date, time) {
     return response.data;
 }
 
-// main(CURRENT_BOOKED_DATE)
+main(CURRENT_BOOKED_DATE)
 
 export { login, getAppointSchedulingInfo, checkAvailableDate, checkAvailableTime}
