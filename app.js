@@ -6,7 +6,7 @@ import { clear, log } from 'console';
 import { exit } from 'process';
 import { exec } from "child_process";
 
-const CURRENT_BOOKED_DATE = "2027-09-05"
+const CURRENT_BOOKED_DATE = "2025-09-05"
 
 
 const USERNAME = process.env.USERNAME
